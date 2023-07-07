@@ -1,22 +1,18 @@
 //layout
 import Layout from "../layouts/default";
-
 //import hook react
 import { useState } from 'react';
-
 //import Head
 import Head from 'next/head';
-
 //import router
 import Router from 'next/router';
-
 //import axios
 import axios from "axios";
 
 function Register() {
     
     //define state
-    const [name, setName] = useState("");
+    const [username, setName] = useState("");
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [passwordConfirmation, setPasswordConfirmation] = useState("");
@@ -32,13 +28,14 @@ function Register() {
         const formData = new FormData();
 
         //append data to formData
-        formData.append('name', name);
+        formData.append('jwt','fb73c4ab674837f4a184ce11575ee53ff637f81a2f2e355333204befc99a9eddca1d5c66447b98c4ef1087e2ccc70234ae97e206338c71cebc3ebfad3999f18ddb4596c941a612df87277c602e866136853b0156bc66bc50d014e34b00e44282942b202361c6c287d06791c97e5619ace95b03c92d17569cae5622809cbdaa8a');
+        formData.append('username', username);
         formData.append('email', email);
         formData.append('password', password);
         formData.append('password_confirmation', passwordConfirmation);
 
         //send data to server
-        await axios.post(`${process.env.NEXT_PUBLIC_API_BACKEND}/api/register`, formData)
+        await axios.post(`${process.env.NEXT_PUBLIC_API_BACKEND}/api/auth/local/register`, formData)
         .then(() => {
 
             //redirect to logi page
@@ -67,13 +64,13 @@ function Register() {
                                     <div className="row">
                                         <div className="col-md-6">
                                             <div className="mb-3">
-                                                <label className="form-label">NAMA LENGKAP</label>
-                                                <input type="text" className="form-control" value={name} onChange={(e) => setName(e.target.value)} placeholder="Masukkan Nama Lengkap"/>
+                                                <label className="form-label">Username </label>
+                                                <input type="text" className="form-control" value={username} onChange={(e) => setName(e.target.value)} placeholder="Masukkan Username"/>
                                             </div>
                                             {
-                                            validation.name && (
+                                            validation.username && (
                                                 <div className="alert alert-danger">
-                                                    {validation.name[0]}
+                                                    {validation.username[0]}
                                                 </div>
                                             )
                                             }
