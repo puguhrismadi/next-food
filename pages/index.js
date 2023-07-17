@@ -1,31 +1,37 @@
-//layout
-import Layout from "../layouts/default";
+import React, { useState } from "react";
 
-//import Head
-import Head from 'next/head';
+import { Col, Input, InputGroup, Row } from "reactstrap";
+import RestaurantList from "../components/RestaurantList";
 
 function Home() {
-
-    return(
-        <Layout>
-            <Head>
-                <title>Home - Belajar Next</title>
-            </Head>
-            <div className="container" style={{ marginTop: '80px' }}>
-                <div className="row justify-content-center">
-                    <div className="col-md-12">
-                      <div className="p-5 mb-4 bg-light rounded-3 shadow-sm border-0">
-                          <div className="container-fluid py-5">
-                              <h2 className="display-6 fw-bold">Strapi JWT + NEXT.JS</h2>
-                              <p className="col-md-12 fs-4">Belajar Authentication Laravel JWT dengan Next.js di Spasi.com</p>
-                              <a href="https://spasi.com/posts" target="_blank" className="btn btn-primary btn-lg" type="button">Selengkapnya</a>
-                          </div>
-                      </div>
-                    </div>
-                </div>
-            </div>
-        </Layout>
-    )
+  const [query, updateQuery] = useState("");
+  return (
+    <div className="container-fluid">
+      <Row>
+        <Col>
+          <div className="search">
+            <InputGroup>
+               <div className="input-group-append">
+                <span className="input-group-text" id="basic-addon2">Search</span>
+               </div>
+              <Input
+                onChange={e => updateQuery(e.target.value.toLocaleLowerCase())}
+                value={query}
+              />
+            </InputGroup>
+          </div>
+           <RestaurantList search={query} />
+        </Col>
+      </Row>
+      <style jsx>
+        {`
+          .search {
+            margin: 20px;
+            width: 500px;
+          }
+        `}
+      </style>
+    </div>
+  );
 }
-
-export default Home
+export default Home;

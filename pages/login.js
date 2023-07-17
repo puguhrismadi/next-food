@@ -42,14 +42,15 @@ function Login() {
 
             //set token on cookies get jwt/token nya from api 
             Cookies.set('token', response.data.jwt);
-            console.log(response.data)
+            //console.log(response.data)
             //redirect to dashboard 
             Router.push('/dashboard');
         })
         .catch((error) => {
 
             //assign error to state "validation"
-            setValidation(error.response.data);
+            setValidation(error.response.data.error.message);
+            console.log(validation);
         })
     };
 
@@ -77,9 +78,9 @@ function Login() {
                                 <h4 className="fw-bold">HALAMAN LOGIN</h4>
                                 <hr/>
                                 {
-                                    validation.message && (
+                                    validation != '' && (
                                         <div className="alert alert-danger">
-                                            {validation.message}
+                                            {validation}
                                         </div>
                                     )
                                 }
@@ -89,9 +90,9 @@ function Login() {
                                         <input type="email" className="form-control" value={identifier} onChange={(e) => setIdentifier(e.target.value)} placeholder="Masukkan Alamat Email"/>
                                     </div>
                                     {
-                                        validation.identifier && (
+                                        validation.password && (
                                             <div className="alert alert-danger">
-                                                {validation[0].message}
+                                                {validation}
                                             </div>
                                         )
                                     }
@@ -102,7 +103,7 @@ function Login() {
                                     {
                                         validation.password && (
                                             <div className="alert alert-danger">
-                                                {validation.password[0]}
+                                                {validation[1].password}
                                             </div>
                                         )
                                     }
