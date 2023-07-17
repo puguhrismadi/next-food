@@ -19,7 +19,7 @@ import Cookies from 'js-cookie';
 function Login() {
     
     //define state
-    const [email, setEmail] = useState("");
+    const [identifier, setIdentifier] = useState("");
     const [password, setPassword] = useState("");
 
     //define state validation
@@ -31,19 +31,19 @@ function Login() {
         
         //initialize formData
         const formData = new FormData();
-
         //append data to formData
-        formData.append('email', email);
+        //formData.append('jwt','fb73c4ab674837f4a184ce11575ee53ff637f81a2f2e355333204befc99a9eddca1d5c66447b98c4ef1087e2ccc70234ae97e206338c71cebc3ebfad3999f18ddb4596c941a612df87277c602e866136853b0156bc66bc50d014e34b00e44282942b202361c6c287d06791c97e5619ace95b03c92d17569cae5622809cbdaa8a');
+        formData.append('identifier', identifier);
         formData.append('password', password);
 
         //send data to server
-        await axios.post(`${process.env.NEXT_PUBLIC_API_BACKEND}/api/login`, formData)
+        await axios.post(`${process.env.NEXT_PUBLIC_API_BACKEND}/api/auth/local`, formData)
         .then((response) => {
 
-            //set token on cookies
-            Cookies.set('token', response.data.token);
-
-            //redirect to dashboard
+            //set token on cookies get jwt/token nya from api 
+            Cookies.set('token', response.data.jwt);
+            console.log(response.data)
+            //redirect to dashboard 
             Router.push('/dashboard');
         })
         .catch((error) => {
@@ -86,12 +86,12 @@ function Login() {
                                 <form onSubmit={loginHandler}>
                                     <div className="mb-3">
                                         <label className="form-label">ALAMAT EMAIL</label>
-                                        <input type="email" className="form-control" value={email} onChange={(e) => setEmail(e.target.value)} placeholder="Masukkan Alamat Email"/>
+                                        <input type="email" className="form-control" value={identifier} onChange={(e) => setIdentifier(e.target.value)} placeholder="Masukkan Alamat Email"/>
                                     </div>
                                     {
-                                        validation.email && (
+                                        validation.identifier && (
                                             <div className="alert alert-danger">
-                                                {validation.email[0]}
+                                                {validation[0].message}
                                             </div>
                                         )
                                     }
